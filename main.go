@@ -13,6 +13,7 @@ type task struct {
 }
 
 var lista = make([]string, 0)
+var taskList = make(chan task)
 
 func main() {
 
