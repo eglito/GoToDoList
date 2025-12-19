@@ -10,6 +10,7 @@ type task struct {
 	name string
 	data string
 	note string
+	done bool
 }
 
 var taskList = []task{}
@@ -25,21 +26,22 @@ func main() {
 		if scanner.Scan() {
 			typedText := scanner.Text()
 
-			if typedText == "add" {
+			switch typedText {
+
+			case "add":
 				fmt.Println("Insira um item na lista: ")
 				scanner.Scan()
 				NewTask := task{note: scanner.Text()}
 				taskList = addTasK(taskList, NewTask)
-			}
 
-			if typedText == "list" {
+			case "list":
 				fmt.Println("")
 				fmt.Println("A seguir, sua lista de afazeres: ")
 				printList(taskList)
-			}
 
-			if typedText == "end" {
+			case "end":
 				break
+
 			}
 		}
 	}
@@ -47,7 +49,6 @@ func main() {
 
 func addTasK(list []task, newTask task) []task {
 	return append(list, newTask)
-
 }
 
 func printList(list []task) {
