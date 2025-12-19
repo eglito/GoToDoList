@@ -7,16 +7,15 @@ import (
 )
 
 type task struct {
-	name  string
-	data  string
-	texto string
+	name string
+	data string
+	note string
 }
 
-var lista = make([]string, 0)
+var taskList = []task{}
 
 func main() {
 
-	lista = append(lista, "Comprar cigarro")
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Bem-vindo ao toDoList - aqui você realiza suas tarefas")
@@ -24,34 +23,35 @@ func main() {
 	for {
 
 		if scanner.Scan() {
-			textoDigitado := scanner.Text()
+			typedText := scanner.Text()
 
-			if textoDigitado == "add" {
+			if typedText == "add" {
 				fmt.Println("Insira um item na lista: ")
 				scanner.Scan()
-				lista = addTasK(lista, scanner.Text())
+				NewTask := task{note: scanner.Text()}
+				taskList = addTasK(taskList, NewTask)
 			}
 
-			if textoDigitado == "list" {
+			if typedText == "list" {
 				fmt.Println("")
 				fmt.Println("A seguir, sua lista de afazeres: ")
-				returnList(lista)
+				printList(taskList)
 			}
 
-			if textoDigitado == "end" {
+			if typedText == "end" {
 				break
 			}
 		}
 	}
 }
 
-func addTasK(lista []string, stg string) []string {
-	lista = append(lista, stg)
-	return lista
+func addTasK(list []task, newTask task) []task {
+	return append(list, newTask)
+
 }
 
-func returnList(lista []string) {
-	for i, p := range lista {
-		fmt.Printf("%d: %s\n", i+1, p)
+func printList(list []task) {
+	for i, p := range list {
+		fmt.Printf("%d.\t%s\n", i+1, p.note)
 	}
 }
